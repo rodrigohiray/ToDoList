@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Montserrat:ital,wght@0,100;0,200;0,500;0,700;1,200&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #0099FF;
+}
+
+main {
+  background-color: #FFF;
+  border-radius: 8px;
+  padding: 20px;
+  width: 90%;
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-form {
+  display: flex;
+  margin-bottom: 50px;
+  gap: 15px;
+  width: 100%;
+}
+
+input {
+  border: 1px solid #DDD;
+  border-radius: 5px;
+  outline: none;
+  padding: 15px;
+  width: 100%;
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+button[type="submit"] {
+  background-color: #0099FF;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  color: #FFF;
+  font-size: 1.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #DDD;
+  padding: 10px 15px;
+  text-align: center;
+}
+
+td {
+  color: #333;
+  font-weight: 500;
+}
+
+tr:nth-child(even) {
+  background-color: #F5F5F5;
+}
+
+select {
+ width: 100%;
+ border: none;
+ padding: 10px; 
+ border-radius: 8px;
+ font-weight: 600;
+ background-color: #ebebeb;
+}
+select:hover{
+  background-color: #DDD;
+}
+
+.btn-action {
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color: #FFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-action:nth-child(1) {
+  background-color: orange;
+  margin-right: 5px;
+}
+.btn-action:nth-child(2) {
+    background-color: rgba(237, 42, 42, 0.8);
+    margin-right: 5px;
+  }
