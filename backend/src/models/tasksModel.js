@@ -13,9 +13,9 @@ const createTask = async (task) => {
     const { title } = task;
     const dateUTC = new Date(Date.now()).toUTCString(); //conversão da data para o formato utc para salvar no bd
 
-    const query = 'INSERT INTO tasks (title, status, created_at) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO tasks (title) VALUES (?)';
 
-    const [createdTask] = await connection.execute(query, [title, 'Pendente', dateUTC]);
+    const [createdTask] = await connection.execute(query, [title]);
 
     return {insertId: createdTask.insertId};
 };
