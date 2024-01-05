@@ -26,6 +26,29 @@ const addTask = async (event) => {
 
 }
 
+//Excluir uma tarefa
+const deleteTask = async (id_task) => {
+    await fetch(`http://localhost:3333/tasks/${id_task}`, {
+        method: 'DELETE',
+    });
+
+    loadTasks();
+    
+}
+
+
+// Função para atualizar o status da tarefa
+const updateTask = async({id_task, title, status}) => {
+   
+    await fetch(`http://localhost:3333/tasks/${id_task}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({title, status}),
+    });
+
+    loadTasks();
+}
+
 //Formatação da data
 const formatDate = (dateUTC) => {
     const options = { dateStyle: 'long', timeStyle: 'short' };
@@ -79,11 +102,16 @@ const createRow = (task) => {
 
   const select = createSelect(status);
 
+  select.addEventListener('change', ({ target }) => updateTask({ ...task, status: target.value}) );
+
   const editButton = createElement('button', '', '<span class="material-symbols-outlined">edit</span>');
   const deleteButton = createElement('button', '', '<span class="material-symbols-outlined">delete</span>');
 
   editButton.classList.add('btn-action');
   deleteButton.classList.add('btn-action');
+
+  deleteButton.addEventListener('click', () => deleteTask(id_task) );
+
 
   tdStatus.appendChild(select);
 
