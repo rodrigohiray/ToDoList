@@ -34,16 +34,15 @@ const deleteTask = async (id_task) => {
     });
 
     loadTasks();
-
 }
 
 // Função para atualizar a situação da tarefa
-const updateTask = async ({ id_task, title, situation_id }) => {
-
+const updateTask = async({id_task, title}) => {
+   
     await fetch(`http://localhost:3333/tasks/${id_task}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, situation_id }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({title}),
     });
 
     loadTasks();
@@ -107,35 +106,6 @@ const createSelectSituation = (value) => {
     return selectSituation;
 }
 
-const createSelectCategory = (value) => {
-    const options = `
-    <option value="Work">Work</option>
-    <option value="Personal">Personal</option>
-    <option value="Shopping">Shopping</option>
-    <option value="Others">Others</option>
-    `;
-
-    const selectCategory = createElement('select', '', options);
-
-    selectCategory.value = value;
-
-    return selectCategory;
-}
-
-const createSelectPriority = (value) => {
-    const options = `
-    <option value="High">High</option>
-    <option value="Medium">Medium</option>
-    <option value="Low">Low</option>
-    `;
-
-    const selectPriority = createElement('select', '', options);
-
-    selectPriority.value = value;
-
-    return selectPriority;
-}
-
 // Função para redirecionar para a página de detalhes
 const redirectToDetailsPage = (taskId) => {
     window.location.href = `details.html?id=${taskId}`;
@@ -145,7 +115,7 @@ const redirectToDetailsPage = (taskId) => {
 const createTableHeader = () => {
     const thead = createElement('thead');
     const tr = createElement('tr');
-    const headers = ['Task', 'Deadline', 'Status', 'Category', 'Priority', 'Actions'];
+    const headers = ['Task', 'Created at', 'Updated at', 'Situation', 'Actions'];
 
     headers.forEach((header) => {
         const th = createElement('th', header);
@@ -157,23 +127,18 @@ const createTableHeader = () => {
 }
 
 const createRow = (task) => {
-    const { id_task, title, details, deadline, created_at, updated_at, done_at, situation_id, category_id, priority_id } = task;
+    const { id_task, title, created_at, updated_at, situation_id } = task;
 
     const tr = createElement('tr');
     const tdTitle = createElement('td', title);
-    const tdDeadline = createElement('td', formatDate(deadline));
+    const tdCreatedAt = createElement('td', formatDate(created_at));
+    const tdUpdatedAt = createElement('td', formatDate(updated_at));
     const tdSituationId = createElement('td');
-    const tdCategoryId = createElement('td');
-    const tdPriorityId = createElement('td');
     const tdActions = createElement('td');
 
     const selectSituation = createSelectSituation(situation_id);
-    const selectCategory = createSelectCategory(category_id);
-    const selectPriority = createSelectPriority(priority_id);
 
     selectSituation.addEventListener('change', ({ target }) => updateTask({ ...task, situation_id: target.value }));
-    selectCategory.addEventListener('change', ({ target }) => updateTask({ ...task, category_id: target.value }));
-    selectPriority.addEventListener('change', ({ target }) => updateTask({ ...task, priority_id: target.value }));
 
     const viewButton = createElement('button', '', '<span class="material-symbols-outlined">visibility</span>');
     const editButton = createElement('button', '', '<span class="material-symbols-outlined">edit</span>');
@@ -205,8 +170,6 @@ const createRow = (task) => {
     deleteButton.classList.add('btn-action');
 
     tdSituationId.appendChild(selectSituation);
-    tdCategoryId.appendChild(selectCategory);
-    tdPriorityId.appendChild(selectPriority);
 
     tdActions.appendChild(viewButton);
     tdActions.appendChild(editButton);
@@ -214,10 +177,9 @@ const createRow = (task) => {
 
     // Montagem da estrutura da tabela
     tr.appendChild(tdTitle);
-    tr.appendChild(tdDeadline);
+    tr.appendChild(tdCreatedAt);
+    tr.appendChild(tdUpdatedAt);
     tr.appendChild(tdSituationId);
-    tr.appendChild(tdCategoryId);
-    tr.appendChild(tdPriorityId);
     tr.appendChild(tdActions);
 
     tbody.appendChild(tr);
@@ -226,7 +188,6 @@ const createRow = (task) => {
 }
 
 const loadTasks = async () => {
-    createTableHeader();
     const tasks = await fetchTasks();
 
     tbody.innerHTML = '';
@@ -239,5 +200,5 @@ const loadTasks = async () => {
 }
 
 addForm.addEventListener('submit', addTask);
-
+createTableHeader();
 loadTasks();

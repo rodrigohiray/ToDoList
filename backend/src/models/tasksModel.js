@@ -2,9 +2,15 @@
 const connection = require('./connection');
 
 // Função responsável por buscar todas as tarefas no banco de dados
-const getAll = async () => {
+const getTasks = async () => {
     const [tasks] = await connection.execute('SELECT * FROM tasks'); // como é uma função assincrona, eu preciso esperar o retorno, para isso adiciono o await
     return tasks;
+};
+
+// Função para buscar a tarefa indicada no ID
+const getTaskById = async (id) => {
+    const [taskById] = await connection.execute('SELECT * FROM tasks WHERE id_task = ?', [id]);
+    return taskById[0]; // Retorna a primeira (e única) tarefa encontrada
 };
 
 // Função/rota para criar uma nova tarefa
@@ -27,22 +33,20 @@ const deleteTask = async (id) => {
 
 // Função para atualizar as tarefas criadas
 const updateTask = async (id, task) => {
-    const { title, status } = task;
+    const { title } = task;
     
-    const query = 'UPDATE tasks SET title = ?, status = ? WHERE id_task = ?';
+    const query = 'UPDATE tasks SET title = ? WHERE id_task = ?';
        
-    const [updatedTask] = await connection.execute(query, [title, status, id]);
+    const [updatedTask] = await connection.execute(query, [title, id]);
     return updatedTask;
 };
-
-
-
 
 // Fazendo desta forma ao invés de eu exportar o getAll diretamente, eu exporto um objeto que 
 // contém o getAll. Isso é útil para quando eu tiver mais de uma função para 
 // exportar, pois assim eu posso exportar todas elas dentro de um objeto.
 module.exports = {
-    getAll,
+    getTasks,
+    getTaskById,
     createTask,
     deleteTask,
     updateTask
