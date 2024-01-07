@@ -97,10 +97,14 @@ select:hover{
 }
 
 .btn-action:nth-child(1) {
-  background-color: orange;
+  background-color: #0099FF;
   margin-right: 5px;
 }
 .btn-action:nth-child(2) {
+  background-color: orange;
+  margin-right: 5px;
+}
+.btn-action:nth-child(3) {
     background-color: rgba(237, 42, 42, 0.8);
     margin-right: 5px;
   }

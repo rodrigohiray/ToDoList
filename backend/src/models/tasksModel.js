@@ -7,7 +7,6 @@ const getAll = async () => {
     return tasks;
 };
 
-
 // Função/rota para criar uma nova tarefa
 const createTask = async (task) => {
     const { title } = task;
